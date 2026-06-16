@@ -1,0 +1,47 @@
+<h1>USUARIOS</h1>
+
+<input type="text" placeholder="digite o email" id="email">
+<input type="text" placeholder="digite o SENHA" id="senha">
+<button onclick="cadastrar()">cadastrar</button>
+<button onclick="visualizar()">Visualizar</button>
+
+<div id="lista"></div>
+
+<script>
+    let _usuarios = JSON.parse(localStorage.getItem('usuarios')) || []
+
+    function cadastrar () {
+        let email = document.getElementById('email').value
+        let senha = document.getElementById('senha').value
+        let usuario = {
+            'email': email,
+            senha
+        }
+       
+        let existe = false
+        _usuarios.forEach((usuario) => {
+            if (email === usuario.email) {
+                existe = true
+            }
+        })
+
+        if (existe) {
+            alert('usuario ja existe')
+        } else {
+            _usuarios.push(usuario)
+            localStorage.setItem('usuarios', JSON.stringify(_usuarios))
+        }
+               
+    }
+
+    function visualizar() {
+        let lista = document.getElementById('lista')
+        lista.innerHTML = ''
+
+        _usuarios.forEach((usuario) => {
+            lista.innerHTML += '<br>' + usuario.email
+        });
+
+    }
+
+</script>
