@@ -5,7 +5,9 @@
 <button onclick="cadastrar()">cadastrar</button>
 <button onclick="visualizar()">Visualizar</button>
 
-<div id="lista"></div>
+<div id="lista">
+
+</div>
 
 <script>
     let _usuarios = JSON.parse(localStorage.getItem('usuarios')) || []
@@ -38,10 +40,41 @@
         let lista = document.getElementById('lista')
         lista.innerHTML = ''
 
-        _usuarios.forEach((usuario) => {
-            lista.innerHTML += '<br>' + usuario.email
-        });
+        _usuarios.forEach((usuario, i) => {
+            lista.innerHTML += `email: ${usuario.email} <br>
+            <button onclick="deletar(${i})">
+                deletar
+                </button>
+               <button onclick="editar(${i})">
+                editar
+                 </button>
+                <br><br>
 
+         `
+
+        });
     }
 
+    function editar(i) {
+         let novoEmail = prompt('digite o novo email', _usuarios[i].email)
+         let novaSenha = prompt('digite a nova senha', _usuarios[i].senha)
+
+         if(novoEmail){
+            _usuarios[i].email = novoEmail
+            _usuarios[i].senha = novaSenha
+
+            visualizar()
+            localStorage.setItem('usuarios', JSON.stringify(_usuarios))
+
+         }
+    }
+
+    function deletar(i) {
+        alert('deletado com sucesso')
+        _usuarios.splice(1,2)
+        visualizar()
+        localStorage.setItem('usuarios', JSON.stringify(_usuarios))
+
+    }
+   
 </script>
